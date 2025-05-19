@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Webseite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
 
+    <!-- Header -->
+    <header class="bg-blue-800 text-white text-center py-16">
+        <div class="container mx-auto">
+            <h1 class="text-4xl font-bold mb-4">Willkommen auf meiner Webseite</h1>
+            <p class="text-lg">Füllen Sie das Formular aus, um Ihre Daten zu übermitteln.</p>
+        </div>
+    </header>
+
+    <!-- Hauptinhalt mit Formular -->
+    <main class="container mx-auto py-12">
+        <section class="bg-white p-8 rounded-lg shadow-md max-w-lg mx-auto">
+            <h2 class="text-2xl font-semibold mb-6 text-center">Ihre Informationen</h2>
+            <form id="dataForm" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-gray-700 font-medium mb-1">Ihr Name</label>
+                    <input type="text" id="name" name="name" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <div>
+                    <label for="hours" class="block text-gray-700 font-medium mb-1">ca. Stundenumfang</label>
+                    <input type="number" id="hours" name="hours" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium mb-1">Ihre E-Mail</label>
+                    <input type="email" id="email" name="email" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">Absenden</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white py-6">
+        <div class="container mx-auto text-center">
+            <p>© 2025 Meine Webseite. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <!-- Navigation nach unten verschoben -->
+    <nav class="bg-blue-600 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-white text-2xl font-bold">Logo</a>
+            <ul class="flex space-x-6">
+                <li><a href="#" class="text-white hover:text-blue-200">Start</a></li>
+                <li><a href="#" class="text-white hover:text-blue-200">Über</a></li>
+                <li><a href="#" class="text-white hover:text-blue-200">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- JavaScript für Formular und CSV-Export -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('dataForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Formulardaten sammeln
+                const name = document.getElementById('name').value;
+                const hours = document.getElementById('hours').value;
+                const email = document.getElementById('email').value;
+
+                // CSV erstellen
+                const csvContent = [
+                    ['Name', 'Stundenumfang', 'E-Mail'],
+                    [name, hours, email]
+                ].map(row => row.join(',')).join('\n');
+
+                // CSV-Datei herunterladen
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', 'form-data.csv');
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Formular zurücksetzen
+                this.reset();
+                alert('Daten wurden als CSV heruntergeladen!');
+            });
+        });
+    </script>
+</body>
+</html>
