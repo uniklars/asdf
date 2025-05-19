@@ -26,6 +26,30 @@
                     <input type="text" id="name" name="name" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
                 </div>
                 <div>
+                    <label for="clientFirstInitial" class="block text-gray-700 font-medium mb-1">erster Buchstabe des Vornamens des Klienten</label>
+                    <input type="text" id="clientFirstInitial" name="clientFirstInitial" maxlength="1" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <div>
+                    <label for="clientLastInitial" class="block text-gray-700 font-medium mb-1">erster Buchstabe des Nachnamens des Klienten</label>
+                    <input type="text" id="clientLastInitial" name="clientLastInitial" maxlength="1" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <div>
+                    <label for="clientBirthday" class="block text-gray-700 font-medium mb-1">Geburtstag des Klienten (TT.MM.YYYY)</label>
+                    <input type="text" id="clientBirthday" name="clientBirthday" pattern="\d{2}\.\d{2}\.\d{4}" placeholder="TT.MM.YYYY" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <div>
+                    <label for="location" class="block text-gray-700 font-medium mb-1">Einsatzort</label>
+                    <input type="text" id="location" name="location" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                </div>
+                <div>
+                    <label for="sgb" class="block text-gray-700 font-medium mb-1">SGB</label>
+                    <select id="sgb" name="sgb" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
+                        <option value="">Bitte wählen...</option>
+                        <option value="SGBVIII">SGBVIII</option>
+                        <option value="SGBIX">SGB IX</option>
+                    </select>
+                </div>
+                <div>
                     <label for="hours" class="block text-gray-700 font-medium mb-1">ca. Stundenumfang</label>
                     <input type="number" id="hours" name="hours" required class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600">
                 </div>
@@ -65,13 +89,36 @@
 
                 // Formulardaten sammeln
                 const name = document.getElementById('name').value;
+                const clientFirstInitial = document.getElementById('clientFirstInitial').value;
+                const clientLastInitial = document.getElementById('clientLastInitial').value;
+                const clientBirthday = document.getElementById('clientBirthday').value;
+                const location = document.getElementById('location').value;
+                const sgb = document.getElementById('sgb').value;
                 const hours = document.getElementById('hours').value;
                 const email = document.getElementById('email').value;
 
                 // CSV erstellen
                 const csvContent = [
-                    ['Name', 'Stundenumfang', 'E-Mail'],
-                    [name, hours, email]
+                    [
+                        'Name',
+                        'erster Buchstabe Vorname Klient',
+                        'erster Buchstabe Nachname Klient',
+                        'Geburtstag Klient',
+                        'Einsatzort',
+                        'SGB',
+                        'Stundenumfang',
+                        'E-Mail'
+                    ],
+                    [
+                        name,
+                        clientFirstInitial,
+                        clientLastInitial,
+                        clientBirthday,
+                        location,
+                        sgb,
+                        hours,
+                        email
+                    ]
                 ].map(row => row.join(',')).join('\n');
 
                 // CSV-Datei herunterladen
